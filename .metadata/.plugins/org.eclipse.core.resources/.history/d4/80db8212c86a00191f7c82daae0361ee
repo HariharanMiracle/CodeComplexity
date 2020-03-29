@@ -1,0 +1,35 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+
+</head>
+<body>
+<%
+String un=(String)session.getAttribute("un");
+if(un == null){
+	String msg = "Login First";
+	String redirectURL = "http://localhost:8081/PAF/logReg.jsp?msg="+msg;
+	response.sendRedirect(redirectURL);
+}
+%>
+		
+										
+										
+										
+										
+										
+										
+										
+										
+							<li><a href="Logout.jsp" onclick = "AlertLogout()">Logout</a></li>							
+						
+							<li><a href="entry/member/myProfile?name=<%=un%>">My Account</a></li>
+					
+		
+	
+</body>
+</html>

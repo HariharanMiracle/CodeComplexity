@@ -1,0 +1,15 @@
+package com.hari.controller;
+
+import java.io.File;
+import java.io.IOException;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.hari.model.Product;
+
+public interface ProductControllerImpl {
+	public Product addProduct(HttpServletRequest request, HttpServletResponse response, String pname, float price, String description, String simage, int mid);
+	public void redirect(String url, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException;
+}

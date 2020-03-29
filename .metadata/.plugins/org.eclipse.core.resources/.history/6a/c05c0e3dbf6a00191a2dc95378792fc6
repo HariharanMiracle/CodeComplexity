@@ -1,0 +1,83 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+
+
+				<!-- Main Content -->
+				<form style = "text-align: center" action="paf/member/Register" method="POST" onsubmit="return validate()">
+					<h1>Registration</h1>
+					<label>User Name:</label> <input type="text" name="username" id = "username" required/>&nbsp;&nbsp;&nbsp;<span id="prusername" style = "color:red"></span><br/>
+					<label>Password:</label> <input type="password" name="password" id = "pw" required/><br/>
+					<label>Re-Type Password:</label> <input type="password" name="rpassword" id = "cpw" required/>&nbsp;&nbsp;&nbsp;<span id="password" style = "color:red"></span><br/>
+					<label>Type:</label> 
+					<select name = "type">
+					  <option value="Seller">Seller</option>
+					  <option value="Buyer">Buyer</option>
+					</select><br/>
+					<label>Address:</label> <input type="text" name="address" id="address" required/>&nbsp;&nbsp;&nbsp;<span id="praddress" style = "color:red"></span><br/>
+					<label>Email Address:</label> <input type="email" name="mailAddress" required/><br/>
+					<label>Contact Number:</label> <input type="text" name="contactNumber"  id="contactNumber" required/>&nbsp;&nbsp;&nbsp;<span id="prcontactNumber" style = "color:red"></span><br/>
+					<input type="submit" value="Submit"/>
+
+
+				</form>
+
+	<script type="text/javascript">
+		function validate(){
+			var pw =  document.getElementById("pw").value;
+			var cpw =  document.getElementById("cpw").value;
+			var username =  document.getElementById("username").value;
+			var contactNumber =  document.getElementById("contactNumber").value;
+			var address =  document.getElementById("address").value;
+				
+			var letters = /^[A-Za-z]+$/;
+			var numeric = /^[0-9]+$/;
+			var alphaNumeric = /^[0-9a-zA-Z]+$/;
+
+			if(pw == cpw){
+				if(username.match(letters)){
+					if(username.length > 3){
+						if(contactNumber.length == 10){
+							if(contactNumber.match(numeric)){
+								if(address.match(letters)){
+									return true;
+								}
+								else{
+									document.getElementById("praddress").innerHTML = "Address should be an alphabetic value!!!";
+									return false;
+								}
+							}
+							else{
+								document.getElementById("prcontactNumber").innerHTML = "Contact Number should be a numeric value!!!";
+								return false;
+							}
+						}
+						else{
+							document.getElementById("prcontactNumber").innerHTML = "Contact Number should be 10 digits!!!";
+							return false;
+						}
+					}
+					else{
+						document.getElementById("prusername").innerHTML = "User Name should be more than 3 letters!!!";
+						return false;
+					}
+				}
+				else{
+					document.getElementById("prusername").innerHTML = "User Name should be an alphabetic value!!!";
+					return false;
+				}
+			}
+			else{
+				document.getElementById("password").innerHTML = "Re-type password again!!!";
+				return false;
+			}
+		}	
+	</script>
+</body>
+</html>

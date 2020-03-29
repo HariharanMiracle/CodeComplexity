@@ -1,0 +1,34 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<%
+String un=(String)session.getAttribute("un");
+if(un == null){
+	String msg = "Login First";
+	String redirectURL = "http://localhost:8081/PAF/login.jsp?msg="+msg;
+	response.sendRedirect(redirectURL);
+}
+%>
+
+
+			<section class="main-content">
+				<!-- Main Content -->
+					<div style = "text-align: center;">
+						<h3>Your profile has been updated Successfully!!!</h3>
+						<h4>Click <a href = "Home.jsp">here</a> for the Home page</h4>	
+					</div>
+			</section>
+			
+		<script type="text/javascript">
+			function AlertLogout(){
+				alert("Logged out");
+			}
+		</script>
+</body>
+</html>

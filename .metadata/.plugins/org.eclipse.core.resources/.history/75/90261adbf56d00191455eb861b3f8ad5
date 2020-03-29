@@ -1,0 +1,12 @@
+package com.hari.controller;
+
+import java.io.File;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.hari.model.Product;
+
+public interface ProductControllerImpl {
+	public Product addProduct(HttpServletRequest request, HttpServletResponse response, int pid, String pname, float price, String description, File image, int mid, String status);
+}

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="Paf_assignment">
+        <property name="context-root" value="Paf_assignment"/>
+        <property name="java-output-path" value="/Paf_assignment/build/classes"/>
+    </wb-module>
+</project-modules>

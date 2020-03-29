@@ -1,0 +1,39 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+
+</head>
+<body>			
+				<!-- Main Content -->
+				
+					<div style = "text-align: center;">
+					<%
+						try{
+							String message = "null";
+							message = request.getParameter("message");
+							if(!message.equals("null")){
+								%><h3 style = "color: red"><%=message %></h3><%
+							}
+						}
+						catch (Exception e){
+							System.out.println("Error: " + e);
+						}
+					%>
+					<form action = "paf/Login/validate" method = "POST">
+						<label>User Name: </label>
+						<input type = "text" name = "username"/><br/><br/>
+						<label>Password: </label>
+						<input type = "password" name = "password"/><br/><br/>
+						<input type = "submit" value = "Submit"/><br/><br/>
+						<a href = "Register.jsp">Sign Up</a>
+					</form>
+					</div>
+				
+			
+ 
+</body>
+</html>

@@ -1,0 +1,45 @@
+package com.hari.dao;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.sql.Types;
+import javax.sql.DataSource;
+import org.springframework.dao.DataAccessException;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.support.SqlLobValue;
+import org.springframework.jdbc.support.lob.DefaultLobHandler;
+import org.springframework.jdbc.support.lob.LobHandler;
+ 
+public class ImageDao {
+ 
+	private JdbcTemplate jdbcTemplate;
+ 
+	public void setDataSource(JdbcTemplate jdbcTemplate) {
+		this.jdbcTemplate = jdbcTemplate;
+	}
+ 
+
+ public void insertImage() {
+ 
+  try {
+   final File image = new File("C:\\puppy.jpg");
+   final InputStream imageIs = new FileInputStream(image);   
+   LobHandler lobHandler = new DefaultLobHandler(); 
+   jdbcTemplate.update(
+         "INSERT INTO trn_imgs (img_title, img_data) VALUES (?, ?)",
+         new Object[] {
+           "Puppy",
+           new SqlLobValue(imageIs, (int)image.length(), lobHandler),
+         },
+         new int[] {Types.VARCHAR, Types.BLOB});
+   
+   
+  } catch (DataAccessException e) {
+   System.out.println("DataAccessException " + e.getMessage());
+  } catch (FileNotFoundException e) {
+   System.out.println("DataAccessException " + e.getMessage());
+  }
+ }
+}

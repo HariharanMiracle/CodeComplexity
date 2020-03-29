@@ -1,0 +1,31 @@
+package com.hari.controller;
+
+import java.io.File;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.hari.dao.MemberDao;
+import com.hari.dao.ProductDao;
+import com.hari.model.Member;
+import com.hari.model.Product;
+
+@RestController
+@RequestMapping("/product")
+
+public class ProductController implements ProductControllerImpl {
+	
+	Product prod;
+	ProductDao dao;
+	
+	@Override
+	@RequestMapping(value = "/addProduct", method = RequestMethod.POST)
+	public Product addProduct(HttpServletRequest request, HttpServletResponse response, @RequestParam("name") int pid, @RequestParam("name") String pname, @RequestParam("name") float price, @RequestParam("name") String description, @RequestParam("name") File image, @RequestParam("name") int mid, @RequestParam("name") String status) {
+		return null;
+	}
+}

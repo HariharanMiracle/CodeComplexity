@@ -1,0 +1,21 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+				<form style = "text-align: center" action="entry/product/addProduct" method="POST">
+					<h1>Add Product</h1>
+					<label>pname:</label> <input type="text" name="pname" required/><br/>
+					<label>price:</label> <input type="text" name="price" required/><br/>
+					<label>description:</label> 
+					<textarea rows="10" cols="24" name = "description"></textarea><br/>
+					<!--<label>image:</label> <input type="file" name="image" required/><br/>-->
+					<label>mid:</label> <input type="text" name="mid" required/><br/>
+					<input type="submit" value="Submit"/>
+				</form>
+</body>
+</html>

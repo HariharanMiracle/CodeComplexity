@@ -1,0 +1,90 @@
+package com.hari.controller;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.sql.Blob;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.jdbc.core.support.SqlLobValue;
+import org.springframework.jdbc.support.lob.DefaultLobHandler;
+import org.springframework.jdbc.support.lob.LobHandler;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.hari.dao.MemberDao;
+import com.hari.dao.ProductDao;
+import com.hari.model.Member;
+import com.hari.model.Product;
+
+@RestController
+@RequestMapping("/product")
+
+public class ProductController implements ProductControllerImpl {
+	
+	Product prod;
+	ProductDao pdao;
+	
+	@Override
+	@RequestMapping(value = "/addProduct", method = RequestMethod.POST)
+	@ResponseBody
+	public String addProduct(HttpServletRequest request, HttpServletResponse response, @RequestParam("pname") String pname, @RequestParam("price") float price, @RequestParam("description") String description, @RequestParam("mid") int mid) {
+		try(ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml")) {
+			//File image = null;@RequestParam("image") File simage
+			pdao=(ProductDao)ctx.getBean("pdao");
+			prod = new Product(1, pname, price, description, mid, "status");
+			int status2=pdao.postProduct(prod);
+			String url = "";
+			if(status2 == -99) {
+				System.out.println("Member failed to add" + status2);
+				//url = "http://localhost:8081/PAF/addProduct.jsp";
+			}
+			else{
+				System.out.println("Product added");
+				url = "http://localhost:8081/PAF/addProduct.jsp";
+			}
+			
+			redirect(url, request, response);
+			//return prod;
+			//File image = null;
+			//dao=(ProductDao)ctx.getBean("pdao");
+			//prod = new Product(1, pname, price, description, image, mid, "status");
+			//System.out.println(prod.getImage());
+			//System.out.println(prod.getImage());
+			//File image = prod.getImage();
+			
+			//File image = new File("F:\\pics\7ChlNJ.jpg");
+			//InputStream imageIs = new FileInputStream(image);
+			//LobHandler lobHandler = new DefaultLobHandler(); 
+			//SqlLobValue b = new SqlLobValue(imageIs, (int)image.length(), lobHandler);
+			//System.out.println(b);
+			return "Good";
+		}
+		catch (Exception e) {
+			System.out.println("Error: " + e);
+			return "Bad";
+		}
+	}
+
+	@Override
+	public void redirect(String url, HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		try{
+        	response.sendRedirect(url);
+        }
+        catch (Exception e) {
+            // TODO: handle exception
+        	//response.sendRedirect("http://localhost:8081/PAF/logReg.jsp");
+            System.out.println("Failed");
+        }
+		
+	}
+}

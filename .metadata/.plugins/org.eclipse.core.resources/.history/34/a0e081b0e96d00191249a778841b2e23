@@ -1,0 +1,5 @@
+package com.hari.dao;
+
+public class ProductDao {
+
+}

@@ -1,0 +1,43 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+
+</head>
+<body>
+	<%
+	String un=(String)session.getAttribute("un");
+	if(un == null){
+		String msg = "Login First";
+		String redirectURL = "http://localhost:8081/PAF/login.jsp?msg="+msg;
+		response.sendRedirect(redirectURL);
+	}
+	%>
+	<h3 style = "margin-left: 10px; margin-top: 10px;"><a href = "paf/member/myProfile?username=<%=un%>"><%=un %></a></h3>
+	<%
+		String username = request.getParameter("username");
+		String type = request.getParameter("type");
+		String address = request.getParameter("address");
+		String mailAddress = request.getParameter("mailAddress");
+		String contactNumber = request.getParameter("contactNumber");
+	%>
+	<a href="Logout.jsp" onclick = "AlertLogout()">Logout</a>
+	<div style = "text-align: center;">
+		<pre style = "color: #D85611; font-family:sans-serif; font-size: 24px; width: 70%; margin-left: 15%"><b>My Profile</b></pre>
+		<br/>
+		<h4>User Name: <%=username %></h4>
+		<h4>User Type: <%=type %></h4>
+		<h4>Address: <%=address %></h4>
+		<h4>Mail Id: <%=mailAddress %></h4>
+		<h4>Contact Number: <%=contactNumber %></h4>
+		<br/>
+		<pre style = "font-family:sans-serif; font-size: 12px; width: 70%; margin-left: 15%">  <a href = "paf/member/updateForm?username=<%=un%>">Edit My Profile</a>          <a href = "paf/member/deactivate?username=<%=un%>">Deactivate my account</a></pre>
+	</div>
+
+	<a href = "Homepage.jsp">Home page</a>
+			
+</body>
+</html>

@@ -1,0 +1,62 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+
+</head>
+<body>
+<%
+String un=(String)session.getAttribute("un");
+if(un == null){
+	String message = "Login First";
+	String redirectURL = "http://localhost:8081/Paf_assignment/login.jsp?message="+message;
+	response.sendRedirect(redirectURL);
+}
+%>
+
+
+				<!-- Main Content -->
+
+					
+					
+					<%
+	String name=(String)session.getAttribute("un"); 
+	String type = "";
+	String address = "";
+	String mailAddress = "";
+	String contactNumber = "";
+	String password = "";
+	
+	try{
+		type = request.getParameter("type");
+		address = request.getParameter("address");
+		mailAddress = request.getParameter("mailAddress");
+		contactNumber = request.getParameter("contactNumber");
+		password = request.getParameter("password");
+	}
+	catch(Exception e){
+		System.out.println("Error: " + e);
+	}
+
+		%>
+		<a href="Logout.jsp" onclick = "AlertLogout()">Logout</a>
+		<a href="paf/member/myProfile?username=<%=name%>">My Account</a>
+			<form action = "paf/member/updateMember" method = "POST">
+				<input type="hidden" name="username" value = "<%=name %>"/>
+				<h3>Type: <%=type %>
+					<select name = "type">
+					  <option value="Seller">Seller</option>
+					  <option value="Buyer">Buyer</option>
+					</select></h3>
+				<h3>Address: <input type="text" name="address" value = "<%=address %>" required/></h3>
+				<h3>Mail Address: <input type="email" name="mailAddress" value = "<%=mailAddress %>" required/></h3>
+				<h3>Contact Number: <input type="text" name="contactNumber" value = "<%=contactNumber %>" required/></h3>
+				<input type = "submit" value = "Submit"/>
+			</form>
+<a href = "Homepage.jsp">Home page</a>
+			
+</body>
+</html>
