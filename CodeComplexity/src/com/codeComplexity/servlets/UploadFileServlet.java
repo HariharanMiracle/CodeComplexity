@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -23,8 +24,10 @@ import javax.servlet.http.Part;
 
 import com.codeComplexity.model.FileToAnalyze;
 import com.codeComplexity.model.SingleLineStatement;
+import com.codeComplexity.model.SingleLineVariable;
+import com.codeComplexity.service.ComplexityMethodsService;
 import com.codeComplexity.service.ComplexitySizeService;
-import com.codeComplexity.service.ReadFileService;
+import com.codeComplexity.service.ComplexityVariableService;
 
 /**
  * Servlet implementation class UploadFileServlet
@@ -59,7 +62,6 @@ public class UploadFileServlet extends HttpServlet {
 		try {
 			String submitBtn = request.getParameter("submitBtn");
 			
-			
 			InputStream inputStream = null; // input stream of the upload file
 	         
 	        // obtains the upload file part in this multipart request
@@ -72,46 +74,52 @@ public class UploadFileServlet extends HttpServlet {
 	             
 	            // obtains input stream of the upload file
 	            inputStream = filePart.getInputStream();
+	            
+	            if(filePart.getSize() == 0) {
+	            	request.setAttribute("msg", "Selected file is empty or You have not selected a file");
+					request.getRequestDispatcher("error.jsp").forward(request, response);
+	            }
 	        }
 
 		   	//creating an InputSreamRteader object
 		   	InputStreamReader isReader = new InputStreamReader(inputStream);
 		 
 		   	BufferedReader reader = new BufferedReader(isReader);
-		   	StringBuffer sb = new StringBuffer();
-		   	String str;
-		      
-		   	while((str = reader.readLine())!= null){
-		   		sb.append(str);
-	    	}
 		   	
-		   	System.out.println(sb.toString());
-		   	byte[] byteArray = sb.toString().getBytes();
-		   	
-		   	System.out.println("Bytes array : " + byteArray);
-		   	String str1 = new String(byteArray);
-		   	System.out.println("String : " + str1);
-		   	
-		   	FileToAnalyze fileToAnalyze = new FileToAnalyze();
-		   	fileToAnalyze.setFile(byteArray);
-		   	fileToAnalyze.setFileName(filePart.getName());
-			
-		   	ReadFileService readFileService = new ReadFileService();
-		   	
+		   	System.out.println("#########################################");
+		   	String line = null;
+		   	List<SingleLineStatement> singleLines = new ArrayList<>();
+//		   	int i = 1;
+//   			while((line = reader.readLine()) != null) {
+//   				SingleLineStatement lineObj = new SingleLineStatement();
+//		   		lineObj.setLineNumber(i);
+//		   		lineObj.setStatement(line);
+//		   		singleLines.add(lineObj);
+//		   		i++;
+//		   	}
+   			System.out.println("#########################################");
+	   	
 			if ("By Variable".equals(submitBtn)) {
 			    System.out.println("Variable");
+			    List<SingleLineVariable> singleLineVariables = new ArrayList<>();
 			    
+			    String lineV;
+			    int x = 1;
+	   			while((lineV = reader.readLine()) != null) {
+	   				SingleLineVariable lineObj = new SingleLineVariable();
+			   		lineObj.setLineNumber(x);
+			   		lineObj.setStatement(lineV);
+			   		singleLineVariables.add(lineObj);
+			   		x++;
+			   	}
 			    
-			    
-			    
-			    
-			    
-			    
-			    
+			    ComplexityVariableService complexityVariableService = new ComplexityVariableService();
+			    singleLineVariables = complexityVariableService.calculateComplexityDueToVariable(singleLineVariables);
+			    request.setAttribute("statementList", singleLineVariables);
+			    request.getRequestDispatcher("resultVariable.jsp").forward(request, response);
 			} else if ("By Statement".equals(submitBtn)) {
-			    System.out.println("Statement");
-			    
-			    List<SingleLineStatement> singleLines = readFileService.readFile(fileToAnalyze);
+			    System.out.println("Statement");			    
+//			    List<SingleLineStatement> singleLines = readFileService.readFile(fileToAnalyze);
 			    ComplexitySizeService complexitySizeService = new ComplexitySizeService();
 			    singleLines = complexitySizeService.calculateComplexityDueToStatmentSize(singleLines);
 			    request.setAttribute("statementList", singleLines);
@@ -119,34 +127,23 @@ public class UploadFileServlet extends HttpServlet {
 
 			} else if ("By Methods".equals(submitBtn)) {
 			    System.out.println("Methods");
-			     
-			    
-			    
-			    
-			    
-			    
+			    ComplexityMethodsService complexityMethodsService = new ComplexityMethodsService();
+			    singleLines = complexityMethodsService.calculateComplexityDueToMethods(singleLines);
+			    request.setAttribute("statementList", singleLines);
+			    request.getRequestDispatcher("resultMethods.jsp").forward(request, response);
+			
 			}
 			else {
 			    System.out.println("Error");
-			    
-			    
-			    
-			    
-			    
-			    
-			    
+			    request.setAttribute("msg", "Please try again");
+				request.getRequestDispatcher("error.jsp").forward(request, response);
 			}
-			
-			
-		   	
-//		   	request.setAttribute("fileToAnalyze", fileToAnalyze);
-//		   	request.getRequestDispatcher("analyze.jsp").forward(request, response);
 		}
 		catch(Exception e) {
 			System.out.println("Exception => UploadFileServlet");
 			e.printStackTrace();
 			
-			request.setAttribute("msg", "Error Uploading");
+			request.setAttribute("msg", "Error in uploading");
 			request.getRequestDispatcher("error.jsp").forward(request, response);
 		}
 	}

@@ -1,6 +1,30 @@
 package com.codeComplexity.util;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class CommonConstants {
+	
+	private List<String> primitiveDatatypesList = new ArrayList<>();
+	private List<String> compositeDatatypesList = new ArrayList<>();
+	
+	public List<String> getPrimitiveList(){
+		primitiveDatatypesList.add("boolean");
+		primitiveDatatypesList.add("byte");
+		primitiveDatatypesList.add("char");
+		primitiveDatatypesList.add("short");
+		primitiveDatatypesList.add("int");
+		primitiveDatatypesList.add("long");
+		primitiveDatatypesList.add("float");
+		primitiveDatatypesList.add("double");
+		return primitiveDatatypesList;
+	}
+	
+	public List<String> getCompositeList(){
+		compositeDatatypesList.add("arrays");
+		return compositeDatatypesList;
+	}
+	
 	// =================== Constants related to control structures
 		// =============================//
 
@@ -192,4 +216,10 @@ public class CommonConstants {
 				+ "\\\\([a-zA-Z0-9<>\\\\[\\\\]._?, \\n]*\\\\) *([a-zA-Z0-9_ ,\\n]*) *\\\\{";
 		// =======================================================================================//
 		public static final String TRY_CATCT_IDENTIFIER = "(try|catch|Exception)";
+		
+		//========================Constant for variable complexity========================
+		//========================Constants for scope========================
+		public static final String SCOPE_IDENTIFIER = "class";
+		public static final String OPEN_CURL = "{";
+		public static final String CLOSE_CERL = "}";
 }
