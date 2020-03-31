@@ -86,9 +86,9 @@ public class UploadFileServlet extends HttpServlet {
 		 
 		   	BufferedReader reader = new BufferedReader(isReader);
 		   	
-		   	System.out.println("#########################################");
-		   	String line = null;
-		   	List<SingleLineStatement> singleLines = new ArrayList<>();
+//		   	System.out.println("#########################################");
+//		   	String line = null;
+//		   	List<SingleLineStatement> singleLines = new ArrayList<>();
 //		   	int i = 1;
 //   			while((line = reader.readLine()) != null) {
 //   				SingleLineStatement lineObj = new SingleLineStatement();
@@ -97,7 +97,7 @@ public class UploadFileServlet extends HttpServlet {
 //		   		singleLines.add(lineObj);
 //		   		i++;
 //		   	}
-   			System.out.println("#########################################");
+//   			System.out.println("#########################################");
 	   	
 			if ("By Variable".equals(submitBtn)) {
 			    System.out.println("Variable");
@@ -118,19 +118,19 @@ public class UploadFileServlet extends HttpServlet {
 			    request.setAttribute("statementList", singleLineVariables);
 			    request.getRequestDispatcher("resultVariable.jsp").forward(request, response);
 			} else if ("By Statement".equals(submitBtn)) {
-			    System.out.println("Statement");			    
-//			    List<SingleLineStatement> singleLines = readFileService.readFile(fileToAnalyze);
-			    ComplexitySizeService complexitySizeService = new ComplexitySizeService();
-			    singleLines = complexitySizeService.calculateComplexityDueToStatmentSize(singleLines);
-			    request.setAttribute("statementList", singleLines);
-			    request.getRequestDispatcher("resultStatement.jsp").forward(request, response);
+//			    System.out.println("Statement");			    
+////			    List<SingleLineStatement> singleLines = readFileService.readFile(fileToAnalyze);
+//			    ComplexitySizeService complexitySizeService = new ComplexitySizeService();
+//			    singleLines = complexitySizeService.calculateComplexityDueToStatmentSize(singleLines);
+//			    request.setAttribute("statementList", singleLines);
+//			    request.getRequestDispatcher("resultStatement.jsp").forward(request, response);
 
 			} else if ("By Methods".equals(submitBtn)) {
-			    System.out.println("Methods");
-			    ComplexityMethodsService complexityMethodsService = new ComplexityMethodsService();
-			    singleLines = complexityMethodsService.calculateComplexityDueToMethods(singleLines);
-			    request.setAttribute("statementList", singleLines);
-			    request.getRequestDispatcher("resultMethods.jsp").forward(request, response);
+//			    System.out.println("Methods");
+//			    ComplexityMethodsService complexityMethodsService = new ComplexityMethodsService();
+//			    singleLines = complexityMethodsService.calculateComplexityDueToMethods(singleLines);
+//			    request.setAttribute("statementList", singleLines);
+//			    request.getRequestDispatcher("resultMethods.jsp").forward(request, response);
 			
 			}
 			else {

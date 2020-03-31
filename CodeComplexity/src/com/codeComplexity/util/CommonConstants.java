@@ -7,6 +7,7 @@ public class CommonConstants {
 	
 	private List<String> primitiveDatatypesList = new ArrayList<>();
 	private List<String> compositeDatatypesList = new ArrayList<>();
+	private List<String> controlStructures = new ArrayList<>();
 	
 	public List<String> getPrimitiveList(){
 		primitiveDatatypesList.add("boolean");
@@ -23,6 +24,17 @@ public class CommonConstants {
 	public List<String> getCompositeList(){
 		compositeDatatypesList.add("arrays");
 		return compositeDatatypesList;
+	}
+	
+	public List<String> getControlStructures(){
+		controlStructures.add("if");
+		controlStructures.add("switch");
+		controlStructures.add("case");
+		controlStructures.add("for");
+		controlStructures.add("while");
+		controlStructures.add("do");
+		controlStructures.add("else");
+		return controlStructures;
 	}
 	
 	// =================== Constants related to control structures

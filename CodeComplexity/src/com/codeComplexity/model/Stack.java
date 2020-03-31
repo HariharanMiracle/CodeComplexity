@@ -28,7 +28,7 @@ public class Stack {
         } 
         else { 
             a[++top] = x; 
-            System.out.println(x + " pushed into stack"); 
+//            System.out.println(x + " pushed into stack"); 
             return true; 
         } 
     } 
@@ -40,7 +40,7 @@ public class Stack {
             return ""; 
         } 
         else {
-        	System.out.println("Stack pop out");
+//        	System.out.println("Stack pop out");
         	String x = a[top--]; 
             return x; 
         } 

@@ -13,91 +13,136 @@ import com.codeComplexity.util.*;
 public class ComplexityVariableService {
 	
 	public List<SingleLineVariable> calculateComplexityDueToVariable(List<SingleLineVariable> singleLinelist) throws Exception{
-		System.out.println("calculateComplexityDueToVariable");
-		System.out.println("\n\n\n");
-		//When stack is empty this statement will be in global state
-		Stack stack = new Stack();
+		//Whole Code
+		CommonConstants common = new CommonConstants();
+		System.out.println("___________________________________Start___________________________________\n\n\n");
 		
+		//Check this line is global or local
+		Stack stack = new Stack();
+		Stack controlStructureStack = new Stack();
+		boolean controlStructureStatus = false;
+				
 		for(SingleLineVariable line : singleLinelist) {
-			System.out.println("for loop start");
-			
+			boolean status = false;
+			//Each line
+					
+			System.out.println("\nLine: " + line.getLineNumber() + " ||| Statement: " + line.getStatement());
 			// split the string by spaces in a 
 			String a[] = line.getStatement().split(" ");
-			
-			System.out.println("$$$$$$$$$$$$$$$$  FOR   $$$$$$$$$$$$$$$$$$$");
-			// search for pattern in a  
-		    for (int i = 0; i < a.length; i++)  
-		    {
-		    	System.out.println("@@@   " + a[i]);
-		    	if ("{".equals(a[i])) { 
-		    		System.out.println("Pattern to Check {");
+					
+			for (int i = 0; i < a.length; i++) {
+				if(a[i].contains("{")) {
 					stack.push("{");
-		    	}
-		    	if ("}".equals(a[i])) { 
-		    		System.out.println("Pattern to Check }");
+				}
+				if(a[i].contains("}")) {
 					stack.pop();
-		    	}
-		    }
-		    System.out.println("$$$$$$$$$$$$$$$$  FOR   $$$$$$$$$$$$$$$$$$$");
-			
-		    System.out.println("%%%%%%%%%%%%%%%%%  SCOPE   %%%%%%%%%%%%%%%%%");
-		    if(stack.getTop() == 0) {
+				}
+			}
+					
+			if(stack.getTop() <= 0) {
 				//global scope
 				line.setWvs(2);
-				System.out.println("Global scope");
+				System.out.println("Global scope => " + stack.getTop());
 			}
 			else {
 				//local State
 				line.setWvs(1);
 				System.out.println("Local scope => " + stack.getTop());
 			}
-		    System.out.println("%%%%%%%%%%%%%%%%%  SCOPE   %%%%%%%%%%%%%%%%%");
-		    
-		    int primitiveCount = 0;
-		  //Counts of primitive data types
-			CommonConstants commonConstants = new CommonConstants();
-			List<String> primitiveList = commonConstants.getPrimitiveList();
+		
+			//Checking the control structure
 			
-			for(String dtype : primitiveList) {
-				// search for pattern
-				for (int i = 0; i < a.length; i++)  
-			    { 
-			    	if (dtype.equals(a[i])) { 
-			    		System.out.println("Pattern to Check " + dtype);
-			    		primitiveCount++;
-			    	}
-			    }
+			//first check whether the line has a control structure
+			for(String control : common.getControlStructures()) {
+				if(line.getStatement().contains(control)) {
+					//this line has a control structure
+					status = true;
+					controlStructureStatus = true;
+				}
 			}
 			
-			line.setNpdtv(primitiveCount);
+			if(status == true && controlStructureStatus == true) {
+				for (int i = 0; i < a.length; i++) {
+				    if(a[i].contains("{")) {
+						controlStructureStack.push("{");
+				    }
+				    if(a[i].contains("}")) {
+				    	controlStructureStack.pop();
+				    }
+				}
+			}
+			else if(status == false && controlStructureStatus == true) {
+				for (int i = 0; i < a.length; i++) {
+				    if(a[i].contains("{")) {
+						controlStructureStack.push("{");
+				    }
+				    if(a[i].contains("}")) {
+				    	controlStructureStack.pop();
+				    }
+				}
+			}
 			
+//			System.out.println("stack => " + controlStructureStack.getTop());
+//			System.out.println("status => " + status + ", controlStatus => " + controlStructureStatus);
 			
+			if(controlStructureStack.getTop() == -1) {
+				controlStructureStatus = false;
+				System.out.println("$$$ This line is not inside a control structure");
+			}
 			
-			
-			int compositeCount = 0;
-			  //Counts of composite data types
-				List<String> compositeList = commonConstants.getCompositeList();
+			if(controlStructureStatus == true) {
+				//We dont consider this line
+				line.setNpdtv(0);
+				line.setNcdtv(0);
+				System.out.println("$$$ In control structure");
+			}
+			else {
+				int primitiveCount = 0;
+				//Counts of primitive data types
+				CommonConstants commonConstants = new CommonConstants();
+				List<String> primitiveList = commonConstants.getPrimitiveList();
 				
-				for(String ctype : compositeList) {
+				for(String dtype : primitiveList) {
 					// search for pattern
-					for (int i = 0; i < a.length; i++)  
-				    { 
-				    	if (ctype.equals(a[i])) { 
-				    		System.out.println("Pattern to Check " + ctype);
-				    		compositeCount++;
-				    	}
+					for (int i = 0; i < a.length; i++) {
+						if(stack.getTop() <= 1) {
+							if(a[i].contains(dtype)) {
+//					    		System.out.println("Pattern to Check " + dtype);
+					    		primitiveCount++;
+							}
+						}
 				    }
 				}
 				
+				line.setNpdtv(primitiveCount);
+				
+				int compositeCount = 0;
+				//Counts of composite data types
+				List<String> compositeList = commonConstants.getCompositeList();
+					
+				for(String ctype : compositeList) {
+					// search for pattern
+					for (int i = 0; i < a.length; i++) { 
+						if(stack.getTop() <= 1) {
+							if(a[i].contains(ctype)) {	
+//								System.out.println("Pattern to Check " + ctype);
+					    		compositeCount++;
+							}
+						}	
+				    }
+				}
+					
 				line.setNcdtv(compositeCount);
+			}
 			
 			line.calculateCV();
-			System.out.println("###################");
-			System.out.println("Statement => " + line.getStatement());
 			System.out.println("CV => " + line.getCv());
-			System.out.println("###################");
+			System.out.println("wvs: " + line.getWvs() + ", npdtv: " + line.getNpdtv() + ", ncdtv: " + line.getNcdtv());
+			
+			System.out.println("");
+			
 		}
-		return singleLinelist;
+		System.out.println("\n\n\n___________________________________End___________________________________");
+		return null;
 	}
-	
 }
