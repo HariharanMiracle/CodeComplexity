@@ -22,4 +22,8 @@ public class FileToAnalyze {
 	public String toString() {
 		return "FileToAnalyze [file=" + Arrays.toString(file) + ", fileName=" + fileName + "]";
 	}
+	
+//	String blood() {
+//		return "";
+//	}
 }

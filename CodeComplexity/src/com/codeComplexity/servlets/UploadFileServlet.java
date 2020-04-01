@@ -23,6 +23,7 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
 import com.codeComplexity.model.FileToAnalyze;
+import com.codeComplexity.model.SingleLineMethods;
 import com.codeComplexity.model.SingleLineStatement;
 import com.codeComplexity.model.SingleLineVariable;
 import com.codeComplexity.service.ComplexityMethodsService;
@@ -126,12 +127,23 @@ public class UploadFileServlet extends HttpServlet {
 //			    request.getRequestDispatcher("resultStatement.jsp").forward(request, response);
 
 			} else if ("By Methods".equals(submitBtn)) {
-//			    System.out.println("Methods");
-//			    ComplexityMethodsService complexityMethodsService = new ComplexityMethodsService();
-//			    singleLines = complexityMethodsService.calculateComplexityDueToMethods(singleLines);
-//			    request.setAttribute("statementList", singleLines);
-//			    request.getRequestDispatcher("resultMethods.jsp").forward(request, response);
-			
+			    System.out.println("Methods");
+			    List<SingleLineMethods> singleLineMethods = new ArrayList<>();
+			    
+			    String lineM;
+			    int x = 1;
+	   			while((lineM = reader.readLine()) != null) {
+	   				SingleLineMethods lineObj = new SingleLineMethods();
+			   		lineObj.setLineNumber(x);
+			   		lineObj.setStatement(lineM);
+			   		singleLineMethods.add(lineObj);
+			   		x++;
+			   	}
+			    
+	   			ComplexityMethodsService complexityMethodsService = new ComplexityMethodsService();
+			    singleLineMethods = complexityMethodsService.calculateComplexityDueToMethods(singleLineMethods);
+			    request.setAttribute("statementList", singleLineMethods);
+			    request.getRequestDispatcher("resultMethods.jsp").forward(request, response);
 			}
 			else {
 			    System.out.println("Error");

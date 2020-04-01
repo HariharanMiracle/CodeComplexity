@@ -31,6 +31,7 @@ public class ComplexityVariableService {
 			String a[] = line.getStatement().split(" ");
 					
 			for (int i = 0; i < a.length; i++) {
+				System.out.println("@@@: " + a[i]);
 				if(a[i].contains("{")) {
 					stack.push("{");
 				}
