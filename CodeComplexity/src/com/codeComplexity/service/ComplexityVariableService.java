@@ -144,6 +144,6 @@ public class ComplexityVariableService {
 			
 		}
 		System.out.println("\n\n\n___________________________________End___________________________________");
-		return null;
+		return singleLinelist;
 	}
 }

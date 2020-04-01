@@ -86,19 +86,6 @@ public class UploadFileServlet extends HttpServlet {
 		   	InputStreamReader isReader = new InputStreamReader(inputStream);
 		 
 		   	BufferedReader reader = new BufferedReader(isReader);
-		   	
-//		   	System.out.println("#########################################");
-//		   	String line = null;
-//		   	List<SingleLineStatement> singleLines = new ArrayList<>();
-//		   	int i = 1;
-//   			while((line = reader.readLine()) != null) {
-//   				SingleLineStatement lineObj = new SingleLineStatement();
-//		   		lineObj.setLineNumber(i);
-//		   		lineObj.setStatement(line);
-//		   		singleLines.add(lineObj);
-//		   		i++;
-//		   	}
-//   			System.out.println("#########################################");
 	   	
 			if ("By Variable".equals(submitBtn)) {
 			    System.out.println("Variable");
@@ -119,12 +106,23 @@ public class UploadFileServlet extends HttpServlet {
 			    request.setAttribute("statementList", singleLineVariables);
 			    request.getRequestDispatcher("resultVariable.jsp").forward(request, response);
 			} else if ("By Statement".equals(submitBtn)) {
-//			    System.out.println("Statement");			    
-////			    List<SingleLineStatement> singleLines = readFileService.readFile(fileToAnalyze);
-//			    ComplexitySizeService complexitySizeService = new ComplexitySizeService();
-//			    singleLines = complexitySizeService.calculateComplexityDueToStatmentSize(singleLines);
-//			    request.setAttribute("statementList", singleLines);
-//			    request.getRequestDispatcher("resultStatement.jsp").forward(request, response);
+				System.out.println("Statements");
+			    List<SingleLineStatement> singleLineStatements = new ArrayList<>();
+			    
+			    String line;
+			    int x = 1;
+	   			while((line = reader.readLine()) != null) {
+	   				SingleLineStatement lineObj = new SingleLineStatement();
+			   		lineObj.setLineNumber(x);
+			   		lineObj.setStatement(line);
+			   		singleLineStatements.add(lineObj);
+			   		x++;
+			   	}
+			    
+			    ComplexitySizeService complexitySizeService = new ComplexitySizeService();
+			    singleLineStatements = complexitySizeService.calculateComplexityDueToStatmentSize(singleLineStatements);
+			    request.setAttribute("statementList", singleLineStatements);
+			    request.getRequestDispatcher("resultStatement.jsp").forward(request, response);
 
 			} else if ("By Methods".equals(submitBtn)) {
 			    System.out.println("Methods");
