@@ -259,7 +259,7 @@ public class ComplexitySizeService {
 		}
 
 		public void setIgnoreList() {
-			toIgnore.add("public");
+//			toIgnore.add("public");
 			toIgnore.add("private");
 			toIgnore.add("protected");
 			toIgnore.add("static");

@@ -147,6 +147,7 @@ public class CommonConstants {
 		private static final String SUB_FIND_KEYWORD_STRING = "String\\s";
 		private static final String SUB_FIND_KEYWORD_PRINTF = "printf.*?";
 		private static final String SUB_FIND_KEYWORD_PRINTLN = "println.*?";
+		private static final String SUB_FIND_KEYWORD_PRINT = "print.*?";
 		private static final String SUB_FIND_KEYWORD_COUT = "cout.*?";
 		private static final String SUB_FIND_KEYWORD_CIN = "cin.*?";
 		private static final String SUB_FIND_KEYWORD_IF = "if.*?";
@@ -186,13 +187,10 @@ public class CommonConstants {
 				+ SUB_FIND_PERCENTAGE_EQUAL + "|" + SUB_FIND_LEFT_DOUBLE_ARROW_EQUAL + "|"
 				+ SUB_FIND_RIGHT_DOUBLE_ARROW_EQUAL + "|" + SUB_FIND_UP_ARROW_EQUAL;
 
-		public static final String KEYWORDS = SUB_FIND_KEYWORD_VOID + "|" + SUB_FIND_KEYWORD_DOUBLE + "|"
-				+ SUB_FIND_KEYWORD_INT + "|" + SUB_FIND_KEYWORD_FLOAT + "|" + SUB_FIND_KEYWORD_STRING + "|"
+		public static final String KEYWORDS = SUB_FIND_KEYWORD_VOID + "|" + SUB_FIND_KEYWORD_PRINT + "|"
 				+ SUB_FIND_KEYWORD_PRINTF + "|" + SUB_FIND_KEYWORD_PRINTLN + "|" + SUB_FIND_KEYWORD_COUT + "|"
-				+ SUB_FIND_KEYWORD_CIN + "|" + SUB_FIND_KEYWORD_IF + "|" + SUB_FIND_KEYWORD_FOR + "|"
-				+ SUB_FIND_KEYWORD_WHILE + "|" + SUB_FIND_KEYWORD_DO_WHILE + "|" + SUB_FIND_KEYWORD_SWITCH + "|"
-				+ SUB_FIND_KEYWORD_CASE + "|" + SUB_FIND_KEYWORD_SYSTEM + "|" + SUB_FIND_KEYWORD_OUT + "|"
-				+ SUB_FIND_KEYWORD_LONG + "|" + SUB_FIND_KEYWORD_ARGS + "|" + SUB_FIND_KEYWORD_MAIN;
+				+ SUB_FIND_KEYWORD_CIN + "|" + SUB_FIND_KEYWORD_SYSTEM + "|" + SUB_FIND_KEYWORD_OUT
+				+ "|" + SUB_FIND_KEYWORD_ARGS + "|" + SUB_FIND_KEYWORD_MAIN;
 
 		public static final String TEXT_INSIDE_QUOTES = "\"([^\"]*)\"";
 
